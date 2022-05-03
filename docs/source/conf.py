@@ -2,9 +2,9 @@
 
 # -- Project information
 
-project = 'Lumache'
+project = 'Lab1: Dependency Analysis and Dependency Graphs'
 copyright = '2021, Graziella'
-author = 'Graziella'
+author = '刘奕秀 李敏 吴佩媛'
 
 release = '0.1'
 version = '0.1.0'
