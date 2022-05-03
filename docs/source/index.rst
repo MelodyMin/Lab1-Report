@@ -1,9 +1,5 @@
-Welcome to Lumache's documentation!
-===================================
-
-----------------------------------------------------
 Lab1: Dependency Analysis and Dependency Graphs
-----------------------------------------------------
+=================================================
 
 Introduction
 ------------------------
@@ -17,21 +13,19 @@ Introduction
 Materials and Methods
 ------------------------
 
-^^^^^
 工具
-^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **Snakefood**：可从 Python 代码生成依赖项，从依赖项列表筛选、聚类和生成图形的工具
 - **Graphviz**：Graphviz是开源的图形可视化软件。图形可视化是一种将结构信息表示为抽象图形和网络图的方式。Graphviz 使用一种叫 DOT 的语言来表示图形。
 - **Mermaid**：Mermaid是一个基于 Javascript 的图表工具。它使用类似 markdown 风格的文本，来简化和加速生成图表、流程图等。
 
-^^^^^
+
 方法
-^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 分析模块间的依赖关系
-^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **安装snakefood3**
 
@@ -66,7 +60,6 @@ Materials and Methods
   dot -T png examples/bgmi.dot -o examples/bgmi.png # install graphviz
 
 分析类/函数之间的依赖关系
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 对代码的进行分析后使用Mermaid绘制依赖关系图。
 
@@ -76,12 +69,10 @@ Materials and Methods
 Results
 -------------
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 EnglishPal（BeginOfSpring）
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 模块间的依赖关系
-^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: dot
 
@@ -126,7 +117,6 @@ EnglishPal（BeginOfSpring）
 `模块依赖关系图 <https://imgtu.com/i/OFpGtg>`_
 
 类/函数之间的依赖关系
-^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: mermaid
 
@@ -253,12 +243,10 @@ EnglishPal（BeginOfSpring）
     +mainpage()
    }
 
-^^^^^^^^^^^^^^^^^^^^^^^^^
 EnglishPal（ColdDew） 
-^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 模块间的依赖关系
-^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: dot
 
@@ -294,7 +282,6 @@ EnglishPal（ColdDew）
 `模块间依赖关系图 <https://imgtu.com/i/OF9n5F>`_
 
 类/函数之间的依赖关系
-^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: mermaid
 
@@ -402,12 +389,10 @@ EnglishPal（ColdDew）
     }
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The order line allocation’s architecture in Chapter 4
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 模块间的依赖关系
-^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: dot
 
@@ -589,10 +574,3 @@ References
 
 [吴佩媛]-201931990410-29723741292@qq.com
 
-Contents
------------
-
-.. toctree::
-
-   usage
-   api
