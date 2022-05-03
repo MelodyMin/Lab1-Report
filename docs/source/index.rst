@@ -552,9 +552,11 @@ Table 1: Comparing five aspects between the two versions of EnglishPal, ColdDew 
 
 From a scale 1 (worst) to scale 5 (best), how would you evaluate the architectural health of each version of EnglishPal?Which version of EnglishPal is easier to understand and maintain? Explain in no more than 3 sentences.
 
-   ColdDew版本等级为2，原因为系统能正常运行，但前后端的耦合较强；一些文件代码较为冗长，阅读代码时不易理解；若修改部分代码，可能会导致多处地方均需修改。
-   BeginningOfSpring版本等级为4，原因为前后端分离，耦合性减弱，便于对代码进行修改；每个文件代码量减少，阅读代码时较容易理解。
-   BeginningOfSpring版本更易理解与维护，每个文件代码量较少，单一职责，逻辑清晰，便于阅读理解；前后端分离，耦合性减弱，便于修改代码。
+   评估ColdDew版本等级为2，原因为系统能正常运行，但前后端的耦合较强；一些文件代码较为冗长，阅读代码时不易理解；若修改部分代码，可能会导致多处地方均需修改。
+   
+   评估BeginningOfSpring版本等级为3，原因为前后端分离，耦合性减弱，修改前端功能代码时，很少涉及后端功能代码，便于对代码进行修改；每个文件代码量减少，阅读代码时较容易理解，但模块间的依赖性仍然很强，未做到很好的依赖反转。
+   
+   BeginningOfSpring版本更易理解与维护，每个文件代码量较少、单一职责、逻辑清晰，便于阅读理解；前后端分离，耦合性减弱，便于修改代码。
 
 References
 -------------
