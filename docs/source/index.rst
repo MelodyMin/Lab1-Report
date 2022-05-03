@@ -1,5 +1,6 @@
 Welcome to Lumache's documentation!
 ===================================
+
 ----------------------------------------------------
 Lab1: Dependency Analysis and Dependency Graphs
 ----------------------------------------------------
@@ -589,7 +590,7 @@ References
 [吴佩媛]-201931990410-29723741292@qq.com
 
 Contents
---------
+-----------
 
 .. toctree::
 
