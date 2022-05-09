@@ -69,7 +69,7 @@ Materials and Methods
 Results
 -------------
 
-EnglishPal（BeginOfSpring）
+EnglishPal（BeginningOfSpring）
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 模块间的依赖关系
@@ -114,7 +114,9 @@ EnglishPal（BeginOfSpring）
   "app.pickle_idea" -> "app.wordfreqCMD"
   }
 
-`模块依赖关系图 <https://imgtu.com/i/OFpGtg>`_
+图片查看：
+
+`模块依赖关系图 <https://s1.ax1x.com/2022/05/02/OFpGtg.png>`_
 
 类/函数之间的依赖关系
 
@@ -279,7 +281,9 @@ EnglishPal（ColdDew）
 
    }
 
-`模块间依赖关系图 <https://imgtu.com/i/OF9n5F>`_
+图片查看：
+
+`模块间依赖关系图 <https://s1.ax1x.com/2022/05/02/OF9n5F.png>`_
 
 类/函数之间的依赖关系
 
@@ -424,7 +428,9 @@ The order line allocation’s architecture in Chapter 4
     "repository" -> "services"
    }
 
-`模块间依赖关系图 <https://imgtu.com/i/OFCCdK>`_
+图片查看：
+
+`模块间依赖关系图 <https://s1.ax1x.com/2022/05/10/OYViAe.png>`_
 
 类/函数之间的依赖关系
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -553,7 +559,7 @@ References
 
 [刘奕秀]- 201931990209 - 1978933929@qq.com (TECH LEAD)
 
-[李  敏]- 201931990403 - 2609891867@qq.com
+[李敏]- 201931990403 - 2609891867@qq.com
 
 [吴佩媛]- 201931990410 - 29723741292@qq.com
 
