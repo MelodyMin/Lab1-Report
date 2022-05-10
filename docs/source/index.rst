@@ -5,9 +5,9 @@ Introduction
 ------------------------
 
 - 根据软件应用程序的源代码，找出模块/类/函数之间的依赖关系。
-- 分析EnglishPal新架构的依赖关系（BeginOfSpring）。
+- 分析EnglishPal新架构的依赖关系（BeginningOfSpring）。
 - 分析EnglishPal旧架构（ColdDew）的依赖关系。
-- 比较上述两种架构。哪一个看起来更好，BeginOfSpring或ColdDew？
+- 比较上述两种架构。哪一个看起来更好，BeginningOfSpring或ColdDew？
 - 分析教科书第4章中订单行分配架构的依赖关系。
 
 Materials and Methods
@@ -117,6 +117,11 @@ EnglishPal（BeginningOfSpring）
 图片查看：
 
 `模块依赖关系图 <https://s1.ax1x.com/2022/05/02/OFpGtg.png>`_
+
+.. image:: ../media/snakefood-BeginningOfSpring.png
+   :align: center
+   :alt: BeginningOfSpring模块依赖关系图
+
 
 类/函数之间的依赖关系
 
