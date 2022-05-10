@@ -114,14 +114,15 @@ EnglishPal（BeginningOfSpring）
   "app.pickle_idea" -> "app.wordfreqCMD"
   }
 
-图片查看：
+图片查看链接：
 
 `模块依赖关系图 <https://s1.ax1x.com/2022/05/02/OFpGtg.png>`_
 
 .. image:: ../media/snakefood-BeginningOfSpring.png
    :align: center
    :alt: BeginningOfSpring模块依赖关系图
-
+   
+图 1 BeginningOfSpring版本的模块依赖关系图：通过使用snakefood工具绘制模块间的依赖关系图
 
 类/函数之间的依赖关系
 
@@ -250,6 +251,12 @@ EnglishPal（BeginningOfSpring）
     +mainpage()
    }
 
+.. image:: ../media/mermaid-BeginningOfSpring.png
+   :align: center
+   :alt: BeginningOfSpring类/函数依赖关系图
+   
+图 2 BeginningOfSpring版本的类/函数依赖关系图：通过使用mermaid语法绘制
+
 EnglishPal（ColdDew） 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -289,6 +296,12 @@ EnglishPal（ColdDew）
 图片查看：
 
 `模块间依赖关系图 <https://s1.ax1x.com/2022/05/02/OF9n5F.png>`_
+
+.. image:: ../media/snakefood-ColdDew.png
+   :align: center
+   :alt: ColdDew模块间依赖关系图
+   
+图 3 ColdDew版本模块间依赖关系图：通过使用snakefood工具绘制
 
 类/函数之间的依赖关系
 
@@ -397,6 +410,11 @@ EnglishPal（ColdDew）
       +make_html_page(lst, fname)
     }
 
+.. image:: ../media/mermaid-ColdDew.png
+   :align: center
+   :alt: ColdDew类/函数间依赖关系图
+   
+图 4 ColdDew版本类/函数间依赖关系图：通过使用mermaid语法绘制
 
 The order line allocation’s architecture in Chapter 4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -436,6 +454,12 @@ The order line allocation’s architecture in Chapter 4
 图片查看：
 
 `模块间依赖关系图 <https://s1.ax1x.com/2022/05/10/OYViAe.png>`_
+
+.. image:: ../media/snakefood-Chapter04.png
+   :align: center
+   :alt: Chapter04模块间依赖关系图
+   
+图 5 Chapter04订单系统的模块间依赖关系图：通过使用snakefood工具绘制
 
 类/函数之间的依赖关系
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -515,6 +539,12 @@ The order line allocation’s architecture in Chapter 4
         +get_postgres_uri()
         +get_api_url()
     }
+
+.. image:: ../media/mermaid-Chapter04.png
+   :align: center
+   :alt: Chapter04类/函数间依赖关系图
+   
+图 6 Chapter04订单系统类/函数间依赖关系图：通过使用mermaid语法绘制
 
 Discussions
 ---------------
