@@ -251,7 +251,7 @@ EnglishPal（BeginningOfSpring）
     +mainpage()
    }
 
-.. image:: ../media/mermaid-BeginningOfSpring.png
+.. image:: ../media/mermaid-BeginningOfSpring2.png
    :align: center
    :alt: BeginningOfSpring类/函数依赖关系图
    
