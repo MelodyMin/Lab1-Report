@@ -540,7 +540,7 @@ The order line allocation’s architecture in Chapter 4
         +get_api_url()
     }
 
-.. image:: ../media/mermaid-Chapter04.png
+.. image:: ../media/mermaid-chapter4.png
    :align: center
    :alt: Chapter04类/函数间依赖关系图
    
