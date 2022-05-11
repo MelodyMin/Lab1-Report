@@ -4,6 +4,16 @@ Lab1: Dependency Analysis and Dependency Graphs
 Introduction
 ------------------------
 
+成员信息：
+
+[刘奕秀]- 201931990209 - 1978933929@qq.com (TECH LEAD)
+
+[李敏]- 201931990403 - 2609891867@qq.com
+
+[吴佩媛]- 201931990410 - 29723741292@qq.com
+
+  
+
 - 根据软件应用程序的源代码，找出模块/类/函数之间的依赖关系。
 - 分析EnglishPal新架构的依赖关系（BeginningOfSpring）。
 - 分析EnglishPal旧架构（ColdDew）的依赖关系。
@@ -588,13 +598,4 @@ References
 `Mermaid <https://mermaid-js.github.io/mermaid-live-editor/edit>`_
 
 `Graphviz 安装并使用 (Python) - 乌漆WhiteMoon - 博客园 (cnblogs.com) <https://www.cnblogs.com/linfangnan/p/13210536.html>`_
-
-
-成员信息：
-
-[刘奕秀]- 201931990209 - 1978933929@qq.com (TECH LEAD)
-
-[李敏]- 201931990403 - 2609891867@qq.com
-
-[吴佩媛]- 201931990410 - 29723741292@qq.com
 
