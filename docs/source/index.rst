@@ -1,8 +1,8 @@
-Lab3:  Persistence Ignorance
-=======================================  
+Lab1: Dependency Analysis and Dependency Graphs
+=================================================
 
-Introduction  
---------------------------------------  
+Introduction
+------------------------
 
 成员信息：
 
@@ -12,131 +12,590 @@ Introduction
 
 [吴佩媛]- 201931990410 - 29723741292@qq.com
 
-1. 了解存储库的模式。  
+  
 
-2. 了解服务层模式。  
+- 根据软件应用程序的源代码，找出模块/类/函数之间的依赖关系。
+- 分析EnglishPal新架构的依赖关系（BeginningOfSpring）。
+- 分析EnglishPal旧架构（ColdDew）的依赖关系。
+- 比较上述两种架构。哪一个看起来更好，BeginningOfSpring或ColdDew？
+- 分析教科书第4章中订单行分配架构的依赖关系。
 
-3. 理解为什么将业务逻辑与数据存储技术分离起来很重要  
+Materials and Methods
+------------------------
 
-Material and Methods  
------------------------------------  
-
-Repository Pattern：
-
-在域和数据映射层之间添加仓储层，以将域对象与数据库访问代码的细节隔离开来，并最小化查询代码的分散和重复。
-
-存储库模式 ：
-
-https://www.cosmicpython.com/book/chapter_02_repository.html 
-
-Result  
------------------------------------------  
-
-代码
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-repository.py 
-
-.. code-block:: python
-
- import abc
- import model
- import os,pickle
-
-
- class AbstractRepository(abc.ABC):
-    @abc.abstractmethod
-    def add(self, batch: model.Batch):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def get(self, reference) -> model.Batch:
-        raise NotImplementedError
-
-
- class SqlAlchemyRepository(AbstractRepository):  
-    def __init__(self, session):
-        self.session = session
-
-    def add(self, batch):
-        self.session.add(batch)
-
-    def get(self, reference):
-        return self.session.query(model.Batch).filter_by(reference=reference).one()
-
-    def list(self):
-        return self.session.query(model.Batch).all()
-
- class PickleRepository(AbstractRepository):
-    ''' Complete the definition of this class. '''
-    def __init__(self, path = None):
-        self.path = path
-
-    def add(self, batch):
-        f = open(self.path, 'wb')   #以二进制格式写入文件
-        pickle.dump(batch, f)       #将 Python 中的对象序列化成二进制对象，并写入文件
-        f.close()
-
-    def get(self, reference):
-        result = []
-        batches = list(self.path)   #获取pickle文件中所有Batch对象
-        if batches:
-            for batch in batches:
-                if batch.reference == reference:  #查找所有符合对象
-                    result.append(batch)     
-        return result
-
-    def list(self):
-        if os.path.getsize(self.path) > 0:  #判断文件是否为空
-            f = open(self.path, 'rb')       #以二进制格式读取文件
-            batches = []
-            while 1:        #读取未知数量的 pickle 对象，反复 load 文件对象，直到抛出异常为止
-                try:
-                    batches.append(pickle.load(f))  #读取指定的序列化数据文件，并返回对象
-                except EOFError:
-                    break
-            f.close()
-            return batches
-
-运行结果
+工具
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../media/test.png
+- **Snakefood**：可从 Python 代码生成依赖项，从依赖项列表筛选、聚类和生成图形的工具
+- **Graphviz**：Graphviz是开源的图形可视化软件。图形可视化是一种将结构信息表示为抽象图形和网络图的方式。Graphviz 使用一种叫 DOT 的语言来表示图形。
+- **Mermaid**：Mermaid是一个基于 Javascript 的图表工具。它使用类似 markdown 风格的文本，来简化和加速生成图表、流程图等。
+
+
+方法
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+分析模块间的依赖关系
+
+**安装snakefood3**
+
+.. code-block:: bash
+
+  pip install snakefood3
+
+**安装Graphviz**
+
+.. code-block:: bash
+
+  pip install graphviz
+
+**使用**
+
+1.运行测试，生成dot代码
+
+.. code-block:: bash
+
+  python -m snakefood3 PROJECT_PATH PYTHON_PACKAGE_NAME --group examples/group
+
+2.生成dot文件
+
+.. code-block:: bash
+
+  python -m snakefood3 ~/code/bgmi/ bgmi -g examples/group > examples/bgmi.dot
+
+3.使用Graphviz将dot文件转化为png文件
+
+.. code-block:: bash
+
+  dot -T png examples/bgmi.dot -o examples/bgmi.png # install graphviz
+
+分析类/函数之间的依赖关系
+
+对代码的进行分析后使用Mermaid绘制依赖关系图。
+
+`Mermaid <https://mermaid-js.github.io/mermaid-live-editor/edit>`_
+
+
+Results
+-------------
+
+EnglishPal（BeginningOfSpring）
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+模块间的依赖关系
+
+.. code-block:: dot
+
+  strict digraph "dependencies" {
+  graph [
+      rankdir="LR",
+      overlap="scale",
+      ratio="fill",
+      fontsize="16",
+      dpi="150",
+      clusterrank="local"
+    ]
+
+   node [
+      fontsize=14
+      shape=ellipse
+      fontname=Consolas
+   ];
+  "app.Login" -> "app.account_service"
+  "app.difficulty" -> "app.Article"
+  "app.pickle_idea" -> "app.Article"
+  "app.pickle_idea2" -> "app.Article"
+  "app.wordfreqCMD" -> "app.Article"
+  "app.WordFreq" -> "app.Article"
+  "app.UseSqlite" -> "app.Article"
+  "app.wordfreqCMD" -> "app.difficulty"
+  "app.UseSqlite" -> "app.Login"
+  "app.user_service" -> "app.main"
+  "app.Login" -> "app.main"
+  "app.account_service" -> "app.main"
+  "app.Yaml" -> "app.main"
+  "app.Article" -> "app.main"
+  "app.pickle_idea" -> "app.user_service"
+  "app.pickle_idea2" -> "app.user_service"
+  "app.wordfreqCMD" -> "app.user_service"
+  "app.WordFreq" -> "app.user_service"
+  "app.Article" -> "app.user_service"
+  "app.wordfreqCMD" -> "app.WordFreq"
+  "app.pickle_idea" -> "app.wordfreqCMD"
+  }
+
+图片查看链接：
+
+`模块依赖关系图 <https://s1.ax1x.com/2022/05/02/OFpGtg.png>`_
+
+.. image:: ../media/snakefood-BeginningOfSpring.png
    :align: center
-   :alt: pytest测试结果
+   :alt: BeginningOfSpring模块依赖关系图
    
-图 1 pytest测试结果
+图 1 BeginningOfSpring版本的模块依赖关系图：通过使用snakefood工具绘制模块间的依赖关系图
 
+类/函数之间的依赖关系
 
-测试视频
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. code-block:: mermaid
 
-[测试视频]  https://cloud.zjnu.edu.cn/share/5eaf2b5a0d73b72ca063fd3583
+  classDiagram
+    account_service..>Login
+    Article..>WordFreq
+    Article..>wordfreqCMD
+    Article..>UseSqlite
+    Article..>pickle_idea
+    Article..>difficulty
+    difficulty..>wordfreqCMD
+    Login..>UseSqlite
+    main ..> Article
+    main ..> Yaml
+    main ..> user_service
+    main ..> account_service
+    user_service..>Article
+    user_service..>WordFreq
+    user_service..>wordfreqCMD
+    user_service..>pickle_idea
+    user_service..>pickle_idea2
+    WordFreq ..> wordfreqCMD
+    wordfreqCMD..> pickle_idea
+    Sqlite3Template <|-- InsertQuery
+    Sqlite3Template <|-- RecordQuery
 
-Discussion
------------------------------------
-1. What the difference between the textbook test_services.py and my test_services.py?
+    class account_service{
+    +signup()
+    +login()
+    +logout()
+    +reset()
 
-  区别：读取数据的来源不同 
+   }
+    class Article{
+    +total_number_of_essays()
+    +get_article_title(s)
+    +get_article_body(s)
+    +get_today_article(user_word_list, articleID)
+    +load_freq_history(path)
+    +within_range(x, y, r)
+    +get_question_part(s)
+    +get_answer_part(s)
+   }
+    class difficulty{
+    +load_record(pickle_fname)
+    +difficulty_level_from_frequency(word, d)
+    +get_difficulty_level(d1, d2)
+    +revert_dict(d)
+    +user_difficulty_level(d_user, d)
+    +text_difficulty_level(s, d)
+   }
+    class Login{
+    +verify_user(username, password)
+    +add_user(username, password)
+    +check_username_availability(username)
+    +change_password(username, old_password, new_password)
+    +get_expiry_date(username)
+    +md5(s)
+   }
+    class pickle_idea{
+    +lst2dict(lst, d)
+    +dict2lst(d)
+    +merge_frequency(lst1, lst2)
+    +load_record(pickle_fname)
+    +save_frequency_to_pickle(d, pickle_fname)
+    +unfamiliar(path,word)
+    +familiar(path,word)
+   }
+    class pickle_idea2{
+    +lst2dict(lst, d)
+    +deleteRecord(path,word)
+    +dict2lst(d)
+    +merge_frequency(lst1, lst2)
+    +load_record(pickle_fname)
+    +save_frequency_to_pickle(d, pickle_fname)
+   }
+    class user_service{
+    +user_reset(username)
+    +unfamiliar(username, word)
+    +familiar(username, word)
+    +deleteword(username, word)
+    +userpage(username)
+    +user_mark_word(username)
+    +get_time()
+    +get_flashed_messages_if_any()
+   }
+    class Sqlite3Template{
+    +__init__(self, db_fname)
+    +connect(self, db_fname)
+    +instructions(self, query_statement)
+    +operate(self)
+    +format_results(self)
+    +do(self)
+    +instructions_with_parameters(self, query_statement, parameters)
+    +do_with_parameters(self)
+    +operate_with_parameters(self)
+   }
+    class InsertQuery{
+    +instructions(self, query)
+   }
+    class RecordQuery{
+    +instructions(self, query)
+    +format_results(self)
+    +get_results(self)
+   }
+    class WordFreq{
+    +__init__(self, s)
+    +get_freq(self)
+   }
+    class wordfreqCMD{
+    +freq(fruit)
+    +youdao_link(s)
+    +file2str(fname)
+    +remove_punctuation(s)
+    +sort_in_descending_order(lst)
+    +sort_in_ascending_order(lst)
+    +make_html_page(lst, fname)
+   }
+    class main{
+    +get_random_image(path)
+    +get_random_ads()
+    +appears_in_test(word,d)
+    +mark_word()
+    +mainpage()
+   }
 
-2. Has the service layer been affected after we have chosen to use another implementation for the Repository Pattern?
+.. image:: ../media/mermaid-BeginningOfSpring2.png
+   :align: center
+   :alt: BeginningOfSpring类/函数依赖关系图
+   
+图 2 BeginningOfSpring版本的类/函数依赖关系图：通过使用mermaid语法绘制
 
-  选择为存储库模式使用另一个实现后，服务层不会收到影响，我们可以说服务层不知道持久性
+EnglishPal（ColdDew） 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+模块间的依赖关系
+
+.. code-block:: dot
+
+  # This file was generated by snakefood3.
+
+   strict digraph "dependencies" {
+    graph [
+            rankdir="LR",
+            overlap="scale",
+            ratio="fill",
+            fontsize="16",
+            dpi="150",
+            clusterrank="local"
+        ]
+
+       node [
+            fontsize=14
+            shape=ellipse
+            fontname=Consolas
+       ];
+    "app.wordfreqCMD" -> "app.difficulty"
+    "app.wordfreqCMD" -> "app.main"
+    "app.UseSqlite" -> "app.main"
+    "app.WordFreq" -> "app.main"
+    "app.pickle_idea" -> "app.main"
+    "app.pickle_idea2" -> "app.main"
+    "app.difficulty" -> "app.main"
+    "app.wordfreqCMD" -> "app.WordFreq"
+    "app.pickle_idea" -> "app.wordfreqCMD"
+
+   }
+
+图片查看：
+
+`模块间依赖关系图 <https://s1.ax1x.com/2022/05/02/OF9n5F.png>`_
+
+.. image:: ../media/snakefood-ColdDew.png
+   :align: center
+   :alt: ColdDew模块间依赖关系图
+   
+图 3 ColdDew版本模块间依赖关系图：通过使用snakefood工具绘制
+
+类/函数之间的依赖关系
+
+.. code-block:: mermaid
+
+  classDiagram
+
+    difficulty ..> wordfreqCMD
+    main ..> wordfreqCMD
+    main ..> WordFreq
+    main ..> InsertQuery
+    main ..> RecordQuery
+    main ..> pickle_idea
+    main ..> pickle_idea2 
+    main ..> difficulty 
+    Sqlite3Template <|-- InsertQuery
+    Sqlite3Template <|-- RecordQuery
+    WordFreq ..> wordfreqCMD
+    wordfreqCMD..> pickle_idea
+    
+    class difficulty{
+      +load_record(pickle_fname)
+      +difficulty_level_from_frequency(word, d)
+      +get_difficulty_level(d1, d2)
+      +revert_dict(d)
+      +user_difficulty_level(d_user, d)
+      +text_difficulty_level(s, d)
+    }
+    class main{
+      +get_random_image(path)
+      +get_random_ads()
+      +total_number_of_essays()
+      +load_freq_history(path)
+      +verify_user(username, password)
+      +add_user(username, password)
+      +check_username_availability(username)
+      +get_expiry_date(username)
+      +within_range(x, y, r)
+      +get_article_title(s)
+      +get_article_body(s)
+      +get_today_article(user_word_list, articleID)
+      +appears_in_test(word, d)
+      +get_time()
+      +get_question_part(s)
+      +get_answer_part(s)
+      +get_flashed_messages_if_any()
+      +user_reset(username)
+      +mark_word()
+      +mainpage()
+      +user_mark_word(username)
+      +unfamiliar(username,word)
+      +familiar(username,word)
+      +deleteword(username,word)
+      +userpage(username)
+      +signup()
+      +login()
+      +logout()
+    }
+    class pickle_idea{
+      +lst2dict(lst, d)
+      +dict2lst(d)
+      +merge_frequency(lst1, lst2)
+      +load_record(pickle_fname)
+      +save_frequency_to_pickle(d, pickle_fname)
+      +unfamiliar(path,word)
+      +familiar(path,word)
+    }
+    class pickle_idea2{
+      +lst2dict(lst, d)
+      +deleteRecord(path,word)
+      +dict2lst(d)
+      +merge_frequency(lst1, lst2)
+      +load_record(pickle_fname)
+      +save_frequency_to_pickle(d, pickle_fname)
+    }
+    class Sqlite3Template{
+      +__init__(self, db_fname)
+      +connect(self, db_fname)
+      +instructions(self, query_statement)
+      +operate(self)
+      +format_results(self)
+      +do(self)
+      +instructions_with_parameters(self, query_statement, parameters)
+      +do_with_parameters(self)
+      +operate_with_parameters(self)
+    }
+    class InsertQuery{
+      +instructions(self, query)
+    }
+    class RecordQuery{
+      +instructions(self, query)
+      +format_results(self)
+      +get_results(self)
+    }
+    class WordFreq{
+      +__init__(self, s)
+      +get_freq(self)
+    }
+    class wordfreqCMD{
+      +freq(fruit)
+      +youdao_link(s)
+      +file2str(fname)
+      +remove_punctuation(s)
+      +sort_in_descending_order(lst)
+      +sort_in_ascending_order(lst)
+      +make_html_page(lst, fname)
+    }
+
+.. image:: ../media/mermaid-ColdDew.png
+   :align: center
+   :alt: ColdDew类/函数间依赖关系图
+   
+图 4 ColdDew版本类/函数间依赖关系图：通过使用mermaid语法绘制
+
+The order line allocation’s architecture in Chapter 4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+模块间的依赖关系
+
+.. code-block:: dot
   
-3. What is the benefit of separating business logic from infrastructure concerns? 
+  # This file was generated by snakefood3.
 
-  好处：降低了业务逻辑对基础设施的依赖，便于对基础设施的管理
- 
-4. Where is the service layer defined, and where is the infrastructure defined. Tell me the Python file name(s).
+  strict digraph "dependencies" {
+    graph [
+            rankdir="LR",
+            overlap="scale",
+            ratio="fill",
+            fontsize="16",
+            dpi="150",
+            clusterrank="local"
+        ]
+    
+       node [
+            fontsize=14
+            shape=ellipse
+            fontname=Consolas
+       ];
+    "repository" -> "flask_app"
+    "services" -> "flask_app"
+    "orm" -> "flask_app"
+    "model" -> "flask_app"
+    "config" -> "flask_app"
+    "model" -> "orm"
+    "model" -> "repository"
+    "model" -> "services"
+    "repository" -> "services"
+   }
 
-  在model.py定义了业务逻辑， repository.py中定义了基础结构
+图片查看：
+
+`模块间依赖关系图 <https://s1.ax1x.com/2022/05/10/OYViAe.png>`_
+
+.. image:: ../media/snakefood-Chapter04.png
+   :align: center
+   :alt: Chapter04模块间依赖关系图
+   
+图 5 Chapter04订单系统的模块间依赖关系图：通过使用snakefood工具绘制
+
+类/函数之间的依赖关系
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: mermaid
+
+  classDiagram
+    OrderLine <|-- orm
+    Batch <|-- orm
+    AbstractRepository o-- SqlAlchemyRepository
+    Batch <|-- AbstractRepository
+    OrderLine <|-- Batch
+    OrderLine <|-- services
+    AbstractRepository <|-- services
+    model <|-- services
+    OrderLine <|-- model
+    Batch <|-- model
+    OutOfStock <|-- model
+    SqlAlchemyRepository <|-- flask_app
+    OrderLine <|-- flask_app
+    OutOfStock <|-- flask_app
+    InvalidSku <|-- flask_app
+    config <|-- flask_app
+    orm <|-- flask_app
+    services <|-- flask_app
+    class orm{
+      +start_mappers()
+    }
+    class AbstractRepository{
+      +add(self, batch: model.Batch)
+      +get(self, reference)
+    }
+    class SqlAlchemyRepository{
+      +session
+      +add(self, batch)
+      +get(self, reference)
+      +list(self)
+    }
+    class OrderLine{
+        +str:orderid
+        +str:sku
+        +int:qty
+    }
+    class Batch{
+        +str:reference
+        +str:sku
+        -int:purchased_quantity
+        +Optional[date]:eta
+        -allocations:Set[OrderLine]
+        __repr__(self)
+        __eq__(self, other)
+        __hash__(self)
+        __gt__(self, other)
+        +allocate(self, line: OrderLine)
+        +deallocate_one(self)
+        +allocated_quantity(self)
+        +available_quantity(self)
+        +can_allocate(self, line: OrderLine)
+    }
+    class flask_app{
+        +allocate_endpoint()
+    }
+    class OutOfStock{
+
+    }
+    class model{
+        +allocate(line: OrderLine, batches: List[Batch])
+    }
+    class InvalidSku{
+    
+    }
+    class services{
+        +is_valid_sku(sku, batches)
+        +allocate(line: OrderLine, repo: AbstractRepository, session)
+    }
+    class config{
+        +get_postgres_uri()
+        +get_api_url()
+    }
+
+.. image:: ../media/mermaid-chapter4.png
+   :align: center
+   :alt: Chapter04类/函数间依赖关系图
+   
+图 6 Chapter04订单系统类/函数间依赖关系图：通过使用mermaid语法绘制
+
+Discussions
+---------------
+
+Table 1: Comparing five aspects between the two versions of EnglishPal, ColdDew and BeginningOfSpring.
+
++---------------------------------------------------------+-------------+-----------------------+
+|                                                         | **ColdDew** | **BeginningOfSpring** |
++=========================================================+=============+=======================+
+|    Lines of code in main.py (excluding blank lines)     |     431     |          56           |
++---------------------------------------------------------+-------------+-----------------------+
+|        Number of HTML files in folder templates         |      3      |          10           |
++---------------------------------------------------------+-------------+-----------------------+
+|         Has a service layer? Answer Yes or No.          |      No     |          Yes          |
++---------------------------------------------------------+-------------+-----------------------+
+| Front-end and back-end coupling. Answer Strong or Weak. |    Strong   |         Weak          |
++---------------------------------------------------------+-------------+-----------------------+
+|           Number of module-level dependencies           |      9      |          21           |
++---------------------------------------------------------+-------------+-----------------------+
+
+
+From a scale 1 (worst) to scale 5 (best), how would you evaluate the architectural health of each version of EnglishPal?Which version of EnglishPal is easier to understand and maintain? Explain in no more than 3 sentences.
+
+   评估ColdDew版本等级为2，原因为系统能正常运行，但前后端的耦合较强；一些文件代码较为冗长，阅读代码时不易理解；若修改部分代码，可能会导致多处地方均需修改。
+   
+   评估BeginningOfSpring版本等级为3，原因为前后端分离，耦合性减弱，修改前端功能代码时，很少涉及后端功能代码，便于对代码进行修改；每个文件代码量减少，阅读代码时较容易理解，但模块间的依赖性仍然很强，后端仍存在部分前端代码。
+   
+   BeginningOfSpring版本更易理解与维护，每个文件代码量较少、单一职责、逻辑清晰，便于阅读理解；前后端分离，耦合性减弱，便于修改代码。
+
+Pros and cons of the current architecture of EnglishPal, BeginningOfSpring.
+
+   Pros：大部分前端代码被分离出来，前后端耦合度减弱，修改前端代码时很少涉及后端功能代码，也便于添加样式或添加前端框架；每个文件代码量减少，便于阅读理解代码。
+   
+   Cons：后端仍存在部分前端代码，前后端的依赖仍然较强，模块间的结构功能不清晰。
 
 References
--------------------------------------
+-------------
 
-https://blog.csdn.net/weixin_42072280/article/details/105989561
+`snakefood · PyPI <https://pypi.org/project/snakefood/>`_
 
-http://c.biancheng.net/view/5736.html
+`Mermaid <https://mermaid-js.github.io/mermaid-live-editor/edit>`_
 
-https://blog.csdn.net/weixin_34362875/article/details/89770393
+`Graphviz 安装并使用 (Python) - 乌漆WhiteMoon - 博客园 (cnblogs.com) <https://www.cnblogs.com/linfangnan/p/13210536.html>`_
 
