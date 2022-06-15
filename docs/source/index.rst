@@ -108,26 +108,26 @@ repository.py
 图 1 pytest测试结果
 
 
-视频结果
+测试视频
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-【测试过程.mp4】  https://cloud.zjnu.edu.cn/share/5eaf2b5a0d73b72ca063fd3583
+[测试视频]  https://cloud.zjnu.edu.cn/share/5eaf2b5a0d73b72ca063fd3583
 
 Discussion
 -----------------------------------
-1. 教科书test_services.py和我的test_services.py有什么区别？
+1. What the difference between the textbook test_services.py and my test_services.py?
 
-   区别：读取数据的来源不同 
+  区别：读取数据的来源不同 
 
-2. 在我们选择为存储库模式使用另一个实现后，服务层是否受到了影响？我们可以说服务层不知道持久性吗？
+2. Has the service layer been affected after we have chosen to use another implementation for the Repository Pattern?
 
   选择为存储库模式使用另一个实现后，服务层不会收到影响，我们可以说服务层不知道持久性
   
-3. 将业务逻辑与基础设施问题分离有什么好处？
+3. What is the benefit of separating business logic from infrastructure concerns? 
 
   好处：降低了业务逻辑对基础设施的依赖，便于对基础设施的管理
  
-4. 在哪里定义了业务逻辑，以及在哪里定义了基础结构？告诉我Python文件名.
+4. Where is the service layer defined, and where is the infrastructure defined. Tell me the Python file name(s).
 
   在model.py定义了业务逻辑， repository.py中定义了基础结构
 
