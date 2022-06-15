@@ -2,7 +2,7 @@
 
 # -- Project information
 
-project = 'Lab2: Persistence Ignorance'
+project = 'Lab3: Persistence Ignorance'
 copyright = '2022, Graziella'
 author = '刘奕秀  李敏  吴佩媛'
 
