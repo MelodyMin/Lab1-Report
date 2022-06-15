@@ -101,13 +101,11 @@ repository.py
 运行结果
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`模块间依赖关系图 <https://s1.ax1x.com/2022/05/02/OF9n5F.png>`_
-
 .. image:: ../media/test.png
    :align: center
    :alt: pytest测试结果
    
-图 3 pytest测试结果
+图 1 pytest测试结果
 
 
 视频结果
@@ -117,7 +115,7 @@ repository.py
 
 Discussion
 -----------------------------------
-1. 教科书test services.py和我的test services.py有什么区别？
+1. 教科书test_services.py和我的test_services.py有什么区别？
 
    区别：读取数据的来源不同 
 
