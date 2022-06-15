@@ -2,7 +2,7 @@
 
 # -- Project information
 
-project = 'Lab3: Persistence Ignorance'
+project = 'Lab1: Dependency Analysis and Dependency Graphs'
 copyright = '2022, Graziella'
 author = '刘奕秀  李敏  吴佩媛'
 
